@@ -1,4 +1,5 @@
-import Header from './Header'
+import Header from './Header';
+import Search from './Search';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -6,11 +7,9 @@ import ReactDOM from 'react-dom';
 class App extends React.Component {
   render(){
     return (
-    <div className="App">
+    <div>
       <Header message="Search for Suburbs!" />
-      <div>
-      main content here--
-      </div>
+      <Search />
     </div>
     )
   }
