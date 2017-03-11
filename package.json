@@ -15,5 +15,11 @@
   "bugs": {
     "url": "https://github.com/Jatindersingh33/SearchSuburbs/issues"
   },
-  "homepage": "https://github.com/Jatindersingh33/SearchSuburbs#readme"
+  "homepage": "https://github.com/Jatindersingh33/SearchSuburbs#readme",
+  "dependencies": {
+    "express": "^4.15.2",
+    "mongodb": "^2.2.24",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2"
+  }
 }
