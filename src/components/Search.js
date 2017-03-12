@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import axios from 'axios';
 import { Row, Col, Grid } from 'react-bootstrap';
 import _ from 'lodash';
-import createFragment from 'react-addons-create-fragment';
+
 
 class Search extends React.Component {
 
@@ -22,56 +22,71 @@ class Search extends React.Component {
   getSuburbs(e){
     let textValue = this.refs.searchArea.value;
     var result={};
-    axios.get('/api/areas/'+ textValue)
-        .then((response) => {
-          console.log(response.data.areas);
-          this.setState({
-            areas: response.data.areas
-                    });
-        });
-      }
-  //     .catch(console.error)
-  //
-  //   if (textValue == "") {
-  //     e.preventDefault()
-  //   }
-  // }
+
+    if (textValue.trim() == "") {
+      e.preventDefault()
+    }
+    else {
+      axios.get('/api/areas/'+ textValue)
+          .then((response) => {
+            this.setState({
+              areas: response.data.areas
+                      });
+          })
+           .catch(console.error)
+    }
+  }
 
 
 
   render(){
   return (
-      <div className="text-center">
-        <div> Search by post code </div>
-        <div>
-          <form method="get" autoComplete="off" onSubmit={this.getSuburbs}>
-              <input ref="searchArea"
-                      type="text"
-                      className="searchInput"
-                      placeholder="Search via postcode"
-                      autoComplete="off"
+      <div className="text-center container">
+            <div> Search by post code </div>
+            <div className="row">
+                    <input ref="searchArea"
+                            type="text"
+                            className="searchInput"
+                            placeholder="Enter postcode"
+                            autoComplete="off"
                     />
-            </form>
-              <button onClick={this.getSuburbs}>Go</button>
-        </div>
+                <button className="btn" onClick={this.getSuburbs}>Go</button>
+            </div>
 
-        <div className="container">
-
-          <div className="row">
-          {_.map(this.state.areas, (area, i) => {
-            return (
-                  <div>
-                      <span>{area.lon}</span>
-                      <span>{area.lat}</span>
-                      <span>{area.Suburb}</span>
-                      <span>{area.State}</span>,
-                      <span>{area.PostCode}</span>
+            <div className="row-center">
+                <div className="col-xs-12 col-md-12">
+                      {_.map(this.state.areas, (area, i) => {
+                        return (
+                                  <div className="col-is-4 col-md-3 col-sm-4 searchInput-resultContainer" key={i}>
+                                    <div className="searchInput-resultItems">
+                                      <div>
+                                         <span className="searchInput-heading">Suburb Name:</span>
+                                         <span>  {area.Suburb.replace('"','').replace('"','')}</span>
+                                      </div>
+                                      <div>
+                                         <span className="searchInput-heading">Longitude:</span>
+                                         <span>  {area.lon.replace('"','').replace('"','')}</span>
+                                         </div>
+                                         <div>
+                                             <span className="searchInput-heading">Latitude:</span>
+                                             <span>  {area.lat.replace('"','').replace('"','')}</span>
+                                         </div>
+                                         <div>
+                                            <span className="searchInput-heading">State:</span>
+                                         <span>  {area.State.replace('"','').replace('"','')}</span>
+                                         </div>
+                                         <div>
+                                            <span className="searchInput-heading">Post Code:</span>
+                                         <span>  {area.PostCode.replace('"','').replace('"','')}</span>
+                                      </div>
+                                    </div>
+                                  </div>
+                            )
+                      })}
                   </div>
-                )
-          })}
-          </div>
-        </div>
-    </div>
+              </div>
+
+      </div>
     )
   }
 }
