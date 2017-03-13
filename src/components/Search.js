@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import axios from 'axios';
 import { Row, Col, Grid } from 'react-bootstrap';
 import _ from 'lodash';
+import MapContainer from './map';
 
 
 class Search extends React.Component {
@@ -10,14 +11,14 @@ class Search extends React.Component {
   constructor() {
     super()
     this.getSuburbs = this.getSuburbs.bind(this)
+
     this.state = {};
   }
+  componentDidMount() {
 
- ComponentWillMount()
- {
+  }
 
 
- }
 
   getSuburbs(e){
     let textValue = this.refs.searchArea.value;
@@ -29,17 +30,14 @@ class Search extends React.Component {
     else {
       axios.get('/api/areas/'+ textValue)
           .then((response) => {
-            this.setState({
-              areas: response.data.areas
-                      });
+            this.setState({ areas: response.data.areas });
           })
-           .catch(console.error)
+          .catch(console.error)
     }
   }
 
-
-
   render(){
+
   return (
       <div className="text-center container">
             <div> Search by post code </div>
@@ -53,36 +51,9 @@ class Search extends React.Component {
                 <button className="btn" onClick={this.getSuburbs}>Go</button>
             </div>
 
-            <div className="row-center">
+            <div id="ResultMap" className="row-center">
                 <div className="col-xs-12 col-md-12">
-                      {_.map(this.state.areas, (area, i) => {
-                        return (
-                                  <div className="col-is-4 col-md-3 col-sm-4 searchInput-resultContainer" key={i}>
-                                    <div className="searchInput-resultItems">
-                                      <div>
-                                         <span className="searchInput-heading">Suburb Name:</span>
-                                         <span>  {area.Suburb.replace('"','').replace('"','')}</span>
-                                      </div>
-                                      <div>
-                                         <span className="searchInput-heading">Longitude:</span>
-                                         <span>  {area.lon.replace('"','').replace('"','')}</span>
-                                         </div>
-                                         <div>
-                                             <span className="searchInput-heading">Latitude:</span>
-                                             <span>  {area.lat.replace('"','').replace('"','')}</span>
-                                         </div>
-                                         <div>
-                                            <span className="searchInput-heading">State:</span>
-                                         <span>  {area.State.replace('"','').replace('"','')}</span>
-                                         </div>
-                                         <div>
-                                            <span className="searchInput-heading">Post Code:</span>
-                                         <span>  {area.PostCode.replace('"','').replace('"','')}</span>
-                                      </div>
-                                    </div>
-                                  </div>
-                            )
-                      })}
+                   <MapContainer areas={this.state.areas} />
                   </div>
               </div>
 

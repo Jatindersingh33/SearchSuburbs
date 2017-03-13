@@ -32,8 +32,15 @@
       text-align: left;
     }
 
-
+    &-MapScreen {
+      position: absolute;
+      height: 500px;
+      width: 100%;
+      top: 200px;
+      left: 0;
+    }
 }
+
 
 @media (min-width: 768px) {
   .searchInput{

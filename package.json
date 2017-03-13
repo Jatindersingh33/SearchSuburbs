@@ -33,6 +33,7 @@
     "react": "^15.4.2",
     "react-bootstrap": "^0.30.8",
     "react-dom": "^15.4.2",
+    "react-google-maps": "^4.11.0",
     "style-loader": "^0.13.2"
   },
   "devDependencies": {
